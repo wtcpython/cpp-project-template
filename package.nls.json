@@ -1,0 +1,17 @@
+{
+  "contributes.commands.cpp.project.create.from.fileexplorer.welcome": "Create C++ Project...",
+  "contributes.commands.cpp.project.createClass": "Class...",
+  "contributes.commands.cpp.project.createInterface": "Interface...",
+  "contributes.commands.cpp.project.createEnum": "Enum...",
+  "contributes.commands.cpp.project.createHeader": "Header File...",
+  "contributes.commands.cpp.project.createSource": "Source File...",
+  "contributes.commands.cpp.project.createCHeader": "C Header File...",
+  "contributes.commands.cpp.project.createCSource": "C Source File...",
+  "contributes.commands.cpp.project.integrateVcpkgToolchain": "Auto-Integrate vcpkg Toolchain",
+  "contributes.commands.cpp.project.upgradeDependencies": "Upgrade All Dependencies",
+  "contributes.commands.cpp.project.refreshDependencies": "Refresh Dependencies",
+  "contributes.commands.cpp.project.addDependency": "Add Dependency",
+  "contributes.submenus.cppProject.newCppFile": "New C++ Class",
+  "contributes.submenus.cppProject.newCFile": "New C File",
+  "viewsWelcome.explorer.contents": "You can also create a new C++ project.\n[Create C++ Project](command:_cpp.project.create.from.fileexplorer.welcome)"
+}

@@ -1,0 +1,17 @@
+{
+  "contributes.commands.cpp.project.create.from.fileexplorer.welcome": "创建 C++ 项目...",
+  "contributes.commands.cpp.project.createClass": "类...",
+  "contributes.commands.cpp.project.createInterface": "接口类型...",
+  "contributes.commands.cpp.project.createEnum": "枚举类型...",
+  "contributes.commands.cpp.project.createHeader": "头文件...",
+  "contributes.commands.cpp.project.createSource": "源文件...",
+  "contributes.commands.cpp.project.createCHeader": "C 头文件...",
+  "contributes.commands.cpp.project.createCSource": "C 源文件...",
+  "contributes.commands.cpp.project.integrateVcpkgToolchain": "自动集成 vcpkg Toolchain",
+  "contributes.commands.cpp.project.upgradeDependencies": "升级所有依赖",
+  "contributes.commands.cpp.project.refreshDependencies": "刷新依赖",
+  "contributes.commands.cpp.project.addDependency": "添加依赖",
+  "contributes.submenus.cppProject.newCppFile": "创建 C++ 类",
+  "contributes.submenus.cppProject.newCFile": "创建 C 文件",
+  "viewsWelcome.explorer.contents": "您也可以创建一个新的 C++ 项目。\n[创建 C++ 项目](command:_cpp.project.create.from.fileexplorer.welcome)"
+}

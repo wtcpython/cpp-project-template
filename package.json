@@ -1,0 +1,217 @@
+{
+  "name": "cpp-project-template",
+  "displayName": "C++ Project Template",
+  "description": "Provides CMake/C++, OpenGL, SDL2, Qt project templates and integrates vcpkg and Meson support.",
+  "version": "0.1.0",
+  "publisher": "wtc",
+  "icon": "icon.png",
+  "readme": "README.md",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "bugs": {
+    "url": "https://github.com/wtcpython/cpp-project-template/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wtcpython/cpp-project-template.git"
+  },
+  "homepage": "https://github.com/wtcpython/cpp-project-template/blob/main/README.md",
+  "qna": "https://github.com/wtcpython/cpp-project-template/issues",
+  "keywords": [
+    "C",
+    "C++",
+    "CUDA",
+    "CMake",
+    "vcpkg",
+    "Meson",
+    "SDL2",
+    "Qt",
+    "OpenGL",
+    "Project Template",
+    "Code Snippets"
+  ],
+  "categories": [
+    "Programming Languages",
+    "Snippets"
+  ],
+  "extensionDependencies": [
+    "ms-vscode.cpptools",
+    "ms-vscode.cmake-tools"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false
+    },
+    "virtualWorkspaces": false
+  },
+  "activationEvents": [
+    "onLanguage:c",
+    "onLanguage:cpp",
+    "onLanguage:cuda-cpp"
+  ],
+  "license": "MIT",
+  "main": "./out/extension.js",
+  "l10n": "./l10n",
+  "contributes": {
+    "commands": [
+      {
+        "command": "_cpp.project.create.from.fileexplorer.welcome",
+        "title": "%contributes.commands.cpp.project.create.from.fileexplorer.welcome%"
+      },
+      {
+        "command": "_cpp.project.createClass",
+        "title": "%contributes.commands.cpp.project.createClass%"
+      },
+      {
+        "command": "_cpp.project.createInterface",
+        "title": "%contributes.commands.cpp.project.createInterface%"
+      },
+      {
+        "command": "_cpp.project.createEnum",
+        "title": "%contributes.commands.cpp.project.createEnum%"
+      },
+      {
+        "command": "_cpp.project.createHeader",
+        "title": "%contributes.commands.cpp.project.createHeader%"
+      },
+      {
+        "command": "_cpp.project.createSource",
+        "title": "%contributes.commands.cpp.project.createSource%"
+      },
+      {
+        "command": "_cpp.project.createCHeader",
+        "title": "%contributes.commands.cpp.project.createCHeader%"
+      },
+      {
+        "command": "_cpp.project.createCSource",
+        "title": "%contributes.commands.cpp.project.createCSource%"
+      },
+      {
+        "command": "_cpp.project.integrateVcpkgToolchain",
+        "title": "%contributes.commands.cpp.project.integrateVcpkgToolchain%"
+      },
+      {
+        "command": "_cpp.project.upgradeDependencies",
+        "title": "%contributes.commands.cpp.project.upgradeDependencies%"
+      },
+      {
+        "command": "_cpp.project.refreshDependencies",
+        "title": "%contributes.commands.cpp.project.refreshDependencies%"
+      },
+      {
+        "command": "_cpp.project.addDependency",
+        "title": "%contributes.commands.cpp.project.addDependency%"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "submenu": "cppProject.newCppFile",
+          "group": "1_cppactions@10",
+          "when": "explorerResourceIsFolder"
+        },
+        {
+          "submenu": "cppProject.newCFile",
+          "group": "1_cppactions@20",
+          "when": "explorerResourceIsFolder"
+        },
+        {
+          "command": "_cpp.project.integrateVcpkgToolchain",
+          "group": "z_commands@10",
+          "when": "resourceFilename == vcpkg.json"
+        },
+        {
+          "command": "_cpp.project.upgradeDependencies",
+          "group": "z_commands@20",
+          "when": "resourceFilename == vcpkg.json"
+        },
+        {
+          "command": "_cpp.project.refreshDependencies",
+          "group": "z_commands@30",
+          "when": "resourceFilename == vcpkg.json"
+        },
+        {
+          "command": "_cpp.project.addDependency",
+          "group": "z_commands@40",
+          "when": "resourceFilename == vcpkg.json"
+        }
+      ],
+      "cppProject.newCppFile": [
+        {
+          "command": "_cpp.project.createClass",
+          "group": "new@10"
+        },
+        {
+          "command": "_cpp.project.createInterface",
+          "group": "new@20"
+        },
+        {
+          "command": "_cpp.project.createEnum",
+          "group": "new@30"
+        },
+        {
+          "command": "_cpp.project.createHeader",
+          "group": "new@40"
+        },
+        {
+          "command": "_cpp.project.createSource",
+          "group": "new@50"
+        }
+      ],
+      "cppProject.newCFile": [
+        {
+          "command": "_cpp.project.createCHeader",
+          "group": "new@10"
+        },
+        {
+          "command": "_cpp.project.createCSource",
+          "group": "new@20"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "cppProject.newCppFile",
+        "label": "%contributes.submenus.cppProject.newCppFile%"
+      },
+      {
+        "id": "cppProject.newCFile",
+        "label": "%contributes.submenus.cppProject.newCFile%"
+      }
+    ],
+    "viewsWelcome": [
+      {
+        "view": "explorer",
+        "contents": "%viewsWelcome.explorer.contents%",
+        "when": "workspaceFolderCount == 0"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/mocha": "^10.0.10",
+    "@types/mustache": "^4.2.6",
+    "@types/node": "22.x",
+    "@types/semver": "^7.7.1",
+    "@types/vscode": "^1.75.0",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.39.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.52.0"
+  },
+  "dependencies": {
+    "fs-extra": "^11.3.3",
+    "mustache": "^4.2.0",
+    "semver": "^7.7.3"
+  }
+}
