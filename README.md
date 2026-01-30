@@ -8,7 +8,7 @@ A lightweight extension to provide additional C++ project features. It works wit
 
 ### Create C++ Projects
 
-You can create CMake, Win32 (Windows only), SDL, Meson, and Qt (requires [Qt Core](https://marketplace.visualstudio.com/items?itemName=TheQtCompany.qt-core)) projects.
+You can create CMake, Makefile, Win32 (Windows only), SDL, Meson, and Qt (requires [Qt Core](https://marketplace.visualstudio.com/items?itemName=TheQtCompany.qt-core)) projects.
 
 ![create project](https://raw.githubusercontent.com/wtcpython/cpp-project-template/main/images/create-project.png)
 
@@ -17,6 +17,8 @@ You can create CMake, Win32 (Windows only), SDL, Meson, and Qt (requires [Qt Cor
 You can create C, C++, CUDA projects in `CMake Project`.
 
 ![create cmake project](https://raw.githubusercontent.com/wtcpython/cpp-project-template/main/images/create-cmake-project.png)
+
+For C++23 and later, you may choose to enable the modern module feature, which uses `import std;` in place of `#include <iostream>`.
 
 ### Flexible choice of C/C++ language standards
 
