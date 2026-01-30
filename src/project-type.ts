@@ -22,6 +22,7 @@ export interface ProjectTypeQuickPick extends QuickPickItem {
 
 export enum TemplateType {
   CMake = "CMake",
+  Makefile = "Makefile",
   Win32 = "Win32",
   SDL = "SDL",
   OpenGL = "OpenGL",

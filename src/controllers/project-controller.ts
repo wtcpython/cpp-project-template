@@ -10,6 +10,7 @@ import {
   l10n,
 } from "vscode";
 import { createCMakeProject } from "../cmake-project";
+import { createMakefileProject } from "../makefile-project";
 import { createWin32Project } from "../win32-project";
 import { createMesonProject } from "../meson-project";
 import { createProject } from "../vcpkg/project";
@@ -128,6 +129,7 @@ export class ProjectController implements Disposable {
         let detail = type.detail;
         if (
           type.metadata.type === TemplateType.CMake ||
+          type.metadata.type === TemplateType.Makefile ||
           type.metadata.type === TemplateType.Win32 ||
           type.metadata.type === TemplateType.SDL ||
           type.metadata.type === TemplateType.OpenGL ||
@@ -161,6 +163,8 @@ export class ProjectController implements Disposable {
 
     if (choice.metadata.type === TemplateType.CMake) {
       await createCMakeProject(this.context);
+    } else if (choice.metadata.type === TemplateType.Makefile) {
+      await createMakefileProject(this.context);
     } else if (choice.metadata.type === TemplateType.Win32) {
       await createWin32Project(this.context);
     } else if (choice.metadata.type === TemplateType.Meson) {
@@ -255,6 +259,15 @@ const projectTypes: ProjectType[] = [
     detail: "Create a basic CMake-based project",
     metadata: {
       type: TemplateType.CMake,
+      extensionId: "",
+      extensionName: "",
+    },
+  },
+  {
+    displayName: "Makefile Project",
+    detail: "Create a basic Makefile-based project",
+    metadata: {
+      type: TemplateType.Makefile,
       extensionId: "",
       extensionName: "",
     },
