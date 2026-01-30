@@ -73,18 +73,38 @@ class CMakeProject extends AbstractProject {
     if (!targetType) {
       return undefined;
     }
-
     options.targetType = targetType.value;
+
+    // For C++ projects with standard >= C++23 and executable target, ask about modules
+    if (
+      langType.value === "cpp" &&
+      parseInt(version, 10) >= 23 &&
+      options.targetType === "exe"
+    ) {
+      const moduleChoice = await window.showQuickPick(
+        [
+          { label: l10n.t("cmake.enableModulesYes"), value: "yes" },
+          { label: l10n.t("cmake.enableModulesNo"), value: "no" },
+        ],
+        {
+          placeHolder: l10n.t("cmake.enableModulesQuestion"),
+          ignoreFocusOut: true,
+        },
+      );
+      if (!moduleChoice) {
+        return undefined;
+      }
+      options.enableModules = moduleChoice.value === "yes";
+    }
     return options;
   }
 
   protected getTemplateDir(options: any): string {
-    return path.join(
-      this.context.extensionPath,
-      "templates",
-      "cmake-basic",
-      `${options.langType}-${options.targetType}-project`,
-    );
+    const base = path.join(this.context.extensionPath, "templates", "cmake-basic");
+    if (options.langType === "cpp" && options.enableModules) {
+      return path.join(base, `${options.langType}-module-${options.targetType}-project`);
+    }
+    return path.join(base, `${options.langType}-${options.targetType}-project`);
   }
 }
 

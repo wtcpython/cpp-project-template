@@ -16,6 +16,9 @@
   "cmake.selectTarget": "选择项目目标类型",
   "cmake.executable": "可执行程序",
   "cmake.library": "库",
+  "cmake.enableModulesYes": "启用 C++ 模块（import std）",
+  "cmake.enableModulesNo": "不启用模块",
+  "cmake.enableModulesQuestion": "是否启用 C++ 模块支持？",
 
   "new.inputName": "输入 {0} 名称",
   "new.exists": "{0} 已存在。",

@@ -16,6 +16,9 @@
   "cmake.selectTarget": "Select the project target type",
   "cmake.executable": "Executable",
   "cmake.library": "Library",
+  "cmake.enableModulesYes": "Enable C++ modules (import std)",
+  "cmake.enableModulesNo": "Do not enable modules",
+  "cmake.enableModulesQuestion": "Enable C++ modules support?",
 
   "new.inputName": "Input the {0} name",
   "new.exists": "{0} already exists.",
