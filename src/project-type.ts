@@ -25,6 +25,7 @@ export enum TemplateType {
   Makefile = "Makefile",
   Win32 = "Win32",
   SDL = "SDL",
+  SDL3 = "SDL3",
   OpenGL = "OpenGL",
   Meson = "Meson",
   Qt = "Qt",

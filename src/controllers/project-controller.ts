@@ -132,6 +132,7 @@ export class ProjectController implements Disposable {
           type.metadata.type === TemplateType.Makefile ||
           type.metadata.type === TemplateType.Win32 ||
           type.metadata.type === TemplateType.SDL ||
+          type.metadata.type === TemplateType.SDL3 ||
           type.metadata.type === TemplateType.OpenGL ||
           type.metadata.type === TemplateType.Meson
         ) {
@@ -171,6 +172,7 @@ export class ProjectController implements Disposable {
       await createMesonProject(this.context);
     } else if (
       choice.metadata.type === TemplateType.SDL ||
+      choice.metadata.type === TemplateType.SDL3 ||
       choice.metadata.type === TemplateType.OpenGL
     ) {
       await createManagedProject(this.context, choice.metadata.type);
@@ -286,6 +288,15 @@ const projectTypes: ProjectType[] = [
     detail: "Create an SDL2 project",
     metadata: {
       type: TemplateType.SDL,
+      extensionId: "",
+      extensionName: "",
+    },
+  },
+  {
+    displayName: "SDL3 Project",
+    detail: "Create an SDL3 project",
+    metadata: {
+      type: TemplateType.SDL3,
       extensionId: "",
       extensionName: "",
     },
