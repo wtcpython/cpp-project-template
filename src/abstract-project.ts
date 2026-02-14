@@ -4,6 +4,18 @@ import * as path from "path";
 import * as Mustache from "mustache";
 import { Utility } from "./utility";
 
+export interface ProjectLanguageItem {
+  label: string;
+  value: string;
+  versions: string[];
+}
+
+export interface StandardProjectOptions {
+  langType: string;
+  targetType: "exe" | "lib";
+  [key: string]: any;
+}
+
 export abstract class AbstractProject {
   constructor(protected context: ExtensionContext) {}
 
@@ -80,13 +92,99 @@ export abstract class AbstractProject {
   protected abstract getProjectOptions(): Promise<any | undefined>;
   protected abstract getTemplateDir(options: any): string;
 
+  protected createLanguageItems(
+    extraItems: ProjectLanguageItem[] = [],
+  ): ProjectLanguageItem[] {
+    return [
+      {
+        label: "C++",
+        value: "cpp",
+        versions: ["11", "14", "17", "20", "23", "26"],
+      },
+      {
+        label: "C",
+        value: "c",
+        versions: ["90", "99", "11", "23"],
+      },
+      ...extraItems,
+    ];
+  }
+
+  protected async promptStandardProjectOptions(
+    items: ProjectLanguageItem[],
+  ): Promise<StandardProjectOptions | undefined> {
+    const langType = await window.showQuickPick(
+      items.map((item) => ({
+        label: item.label,
+        value: item.value,
+        versions: item.versions,
+        description: l10n.t("project.createProject", item.label),
+      })),
+      {
+        ignoreFocusOut: true,
+      },
+    );
+    if (!langType) {
+      return undefined;
+    }
+
+    const options: StandardProjectOptions = {
+      langType: langType.value,
+      targetType: "exe",
+    };
+
+    const version = await window.showQuickPick(langType.versions, {
+      placeHolder: l10n.t("project.selectStandard"),
+      ignoreFocusOut: true,
+    });
+    if (!version) {
+      return undefined;
+    }
+    options[`${langType.value}Version`] = version;
+
+    const targetType = await window.showQuickPick(
+      [
+        {
+          label: l10n.t("project.executable"),
+          value: "exe",
+          description: l10n.t("project.createExe"),
+        },
+        {
+          label: l10n.t("project.library"),
+          value: "lib",
+          description: l10n.t("project.createLib"),
+        },
+      ],
+      {
+        ignoreFocusOut: true,
+        placeHolder: l10n.t("project.selectTarget"),
+      },
+    );
+    if (!targetType) {
+      return undefined;
+    }
+
+    options.targetType = targetType.value as "exe" | "lib";
+    return options;
+  }
+
+  protected async renderExistingTemplates(
+    targetDir: string,
+    relativePaths: string[],
+    vars: any,
+  ): Promise<void> {
+    for (const relativePath of relativePaths) {
+      const fullPath = path.join(targetDir, ...relativePath.split("/"));
+      if (await fse.pathExists(fullPath)) {
+        let content = await fse.readFile(fullPath, "utf-8");
+        content = Mustache.render(content, vars);
+        await fse.writeFile(fullPath, content, "utf-8");
+      }
+    }
+  }
+
   protected async renderTemplates(targetDir: string, vars: any): Promise<void> {
     // Default implementation renders CMakeLists.txt if it exists
-    const cmakeFile = path.join(targetDir, "CMakeLists.txt");
-    if (await fse.pathExists(cmakeFile)) {
-      let cmakeContent = await fse.readFile(cmakeFile, "utf-8");
-      cmakeContent = Mustache.render(cmakeContent, vars);
-      await fse.writeFile(cmakeFile, cmakeContent, "utf-8");
-    }
+    await this.renderExistingTemplates(targetDir, ["CMakeLists.txt"], vars);
   }
 }

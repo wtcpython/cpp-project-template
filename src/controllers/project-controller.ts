@@ -13,7 +13,7 @@ import { createCMakeProject } from "../cmake-project";
 import { createMakefileProject } from "../makefile-project";
 import { createWin32Project } from "../win32-project";
 import { createMesonProject } from "../meson-project";
-import { createProject } from "../vcpkg/project";
+import { createManagedProject } from "../pkgmgr/project-creator";
 import { integrate, install, upgrade, searchAndSelect, add } from "../vcpkg";
 import * as path from "path";
 import {
@@ -173,7 +173,7 @@ export class ProjectController implements Disposable {
       choice.metadata.type === TemplateType.SDL ||
       choice.metadata.type === TemplateType.OpenGL
     ) {
-      await createProject(this.context, choice.metadata.type);
+      await createManagedProject(this.context, choice.metadata.type);
     } else if (choice.metadata.createCommandId) {
       if (choice.metadata.createCommandArgs) {
         await commands.executeCommand(

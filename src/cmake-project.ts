@@ -8,77 +8,28 @@ class CMakeProject extends AbstractProject {
   }
 
   protected async getProjectOptions(): Promise<any | undefined> {
-    const items: any[] = [
-      {
-        label: "C++",
-        value: "cpp",
-        description: l10n.t("cmake.createProject", "C++"),
-        versions: ["11", "14", "17", "20", "23", "26"],
-      },
-      {
-        label: "C",
-        value: "c",
-        description: l10n.t("cmake.createProject", "C"),
-        versions: ["90", "99", "11", "23"],
-      },
-    ];
+    const extraItems: any[] = [];
 
     if (process.platform === "win32" || process.platform === "linux") {
-      items.push({
+      extraItems.push({
         label: "CUDA",
         value: "cuda",
-        description: l10n.t("cmake.createProject", "CUDA"),
         versions: ["14", "17", "20"],
       });
     }
 
-    // Select language type
-    const langType = await window.showQuickPick(items, {
-      ignoreFocusOut: true,
-    });
-    if (!langType) {
-      return undefined;
-    }
-
-    let options: any = { langType: langType.value };
-
-    const version = await window.showQuickPick(langType.versions, {
-      placeHolder: l10n.t("cmake.selectStandard"),
-      ignoreFocusOut: true,
-    });
-    if (!version) {
-      return undefined;
-    }
-    options[`${langType.value}Version`] = version;
-
-    const targetType = await window.showQuickPick(
-      [
-        {
-          label: l10n.t("cmake.executable"),
-          value: "exe",
-          description: l10n.t("cmake.createExe"),
-        },
-        {
-          label: l10n.t("cmake.library"),
-          value: "lib",
-          description: l10n.t("cmake.createLib"),
-        },
-      ],
-      {
-        ignoreFocusOut: true,
-        placeHolder: l10n.t("cmake.selectTarget"),
-      },
+    const options = await this.promptStandardProjectOptions(
+      this.createLanguageItems(extraItems),
     );
-
-    if (!targetType) {
+    if (!options) {
       return undefined;
     }
-    options.targetType = targetType.value;
+    const selectedVersion = options[`${options.langType}Version`];
 
     // For C++ projects with standard >= C++23 and executable target, ask about modules
     if (
-      langType.value === "cpp" &&
-      parseInt(version, 10) >= 23 &&
+      options.langType === "cpp" &&
+      parseInt(selectedVersion, 10) >= 23 &&
       options.targetType === "exe"
     ) {
       const moduleChoice = await window.showQuickPick(
@@ -100,9 +51,16 @@ class CMakeProject extends AbstractProject {
   }
 
   protected getTemplateDir(options: any): string {
-    const base = path.join(this.context.extensionPath, "templates", "cmake-basic");
+    const base = path.join(
+      this.context.extensionPath,
+      "templates",
+      "cmake-basic",
+    );
     if (options.langType === "cpp" && options.enableModules) {
-      return path.join(base, `${options.langType}-module-${options.targetType}-project`);
+      return path.join(
+        base,
+        `${options.langType}-module-${options.targetType}-project`,
+      );
     }
     return path.join(base, `${options.langType}-${options.targetType}-project`);
   }

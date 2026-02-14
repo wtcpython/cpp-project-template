@@ -6,6 +6,20 @@
   "project.created": "项目已创建：{0}",
   "project.open": "打开项目",
   "project.createFailed": "创建项目失败：{0}",
+  "project.createProject": "创建 {0} 项目",
+  "project.selectStandard": "选择标准版本",
+  "project.createExe": "创建可执行程序",
+  "project.createLib": "创建库",
+  "project.selectTarget": "选择项目目标类型",
+  "project.executable": "可执行程序",
+  "project.library": "库",
+  "project.creating": "正在创建项目...",
+  "project.genFiles": "正在生成项目文件...",
+
+  "pkgmgr.select": "选择包管理器",
+  "pkgmgr.noConfig": "未找到项目类型 {0} 和管理器 {1} 的配置",
+
+  "conan.init": "正在初始化 Conan 项目...",
 
   "win32.onlyOnWindows": "Win32 项目只能在 Windows 上创建。",
 

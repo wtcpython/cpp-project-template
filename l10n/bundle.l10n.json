@@ -6,6 +6,20 @@
   "project.created": "Project created: {0}",
   "project.open": "Open Project",
   "project.createFailed": "Failed to create project: {0}",
+  "project.createProject": "Create {0} Project",
+  "project.selectStandard": "Select the standard version",
+  "project.createExe": "Create an executable",
+  "project.createLib": "Create a library",
+  "project.selectTarget": "Select the project target type",
+  "project.executable": "Executable",
+  "project.library": "Library",
+  "project.creating": "Creating project...",
+  "project.genFiles": "Generating project files...",
+
+  "pkgmgr.select": "Select Package Manager",
+  "pkgmgr.noConfig": "No configuration found for project type: {0} with manager: {1}",
+
+  "conan.init": "Initializing Conan project...",
 
   "win32.onlyOnWindows": "Win32 projects can only be created on Windows.",
 
