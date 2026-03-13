@@ -24,6 +24,7 @@ export enum TemplateType {
   CMake = "CMake",
   Makefile = "Makefile",
   Win32 = "Win32",
+  EasyX = "EasyX",
   SDL = "SDL",
   SDL3 = "SDL3",
   OpenGL = "OpenGL",

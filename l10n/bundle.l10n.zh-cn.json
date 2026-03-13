@@ -22,6 +22,7 @@
   "conan.init": "正在初始化 Conan 项目...",
 
   "win32.onlyOnWindows": "Win32 项目只能在 Windows 上创建。",
+  "easyx.onlyOnWindows": "EasyX 项目只能在 Windows 上创建。",
 
   "cmake.createProject": "创建 {0} 项目",
   "cmake.selectStandard": "选择标准版本",

@@ -11,6 +11,7 @@ import {
 } from "vscode";
 import { createCMakeProject } from "../cmake-project";
 import { createMakefileProject } from "../makefile-project";
+import { createEasyXProject } from "../easyx-project";
 import { createWin32Project } from "../win32-project";
 import { createMesonProject } from "../meson-project";
 import { createManagedProject } from "../pkgmgr/project-creator";
@@ -120,7 +121,10 @@ export class ProjectController implements Disposable {
   private async createProject() {
     const items: ProjectTypeQuickPick[] = projectTypes
       .filter((type) => {
-        if (type.metadata.type === TemplateType.Win32) {
+        if (
+          type.metadata.type === TemplateType.Win32 ||
+          type.metadata.type === TemplateType.EasyX
+        ) {
           return process.platform === "win32";
         }
         return true;
@@ -131,6 +135,7 @@ export class ProjectController implements Disposable {
           type.metadata.type === TemplateType.CMake ||
           type.metadata.type === TemplateType.Makefile ||
           type.metadata.type === TemplateType.Win32 ||
+          type.metadata.type === TemplateType.EasyX ||
           type.metadata.type === TemplateType.SDL ||
           type.metadata.type === TemplateType.SDL3 ||
           type.metadata.type === TemplateType.OpenGL ||
@@ -168,6 +173,8 @@ export class ProjectController implements Disposable {
       await createMakefileProject(this.context);
     } else if (choice.metadata.type === TemplateType.Win32) {
       await createWin32Project(this.context);
+    } else if (choice.metadata.type === TemplateType.EasyX) {
+      await createEasyXProject(this.context);
     } else if (choice.metadata.type === TemplateType.Meson) {
       await createMesonProject(this.context);
     } else if (
@@ -279,6 +286,15 @@ const projectTypes: ProjectType[] = [
     detail: "Create a Win32 GUI project",
     metadata: {
       type: TemplateType.Win32,
+      extensionId: "",
+      extensionName: "",
+    },
+  },
+  {
+    displayName: "EasyX Project",
+    detail: "Create an EasyX project",
+    metadata: {
+      type: TemplateType.EasyX,
       extensionId: "",
       extensionName: "",
     },

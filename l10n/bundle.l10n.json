@@ -22,6 +22,7 @@
   "conan.init": "Initializing Conan project...",
 
   "win32.onlyOnWindows": "Win32 projects can only be created on Windows.",
+  "easyx.onlyOnWindows": "EasyX projects can only be created on Windows.",
 
   "cmake.createProject": "Create {0} Project",
   "cmake.selectStandard": "Select the standard version",
