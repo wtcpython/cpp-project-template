@@ -2,7 +2,7 @@
   "name": "cpp-project-template",
   "displayName": "C++ Project Template",
   "description": "Provides CMake/C++, OpenGL, SDL2, Qt project templates and integrates vcpkg and Meson support.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "wtc",
   "icon": "icon.png",
   "readme": "README.md",
