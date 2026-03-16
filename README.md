@@ -14,7 +14,7 @@ You can create CMake, Makefile, Win32 (Windows only), SDL, Meson, and Qt (requir
 
 ### Create CMake Projects
 
-You can create C, C++, CUDA projects in `CMake Project`.
+You can create C, C++, CUDA, and macOS-only Objective-C / Objective-C++ projects in `CMake Project`.
 
 ![create cmake project](https://raw.githubusercontent.com/wtcpython/cpp-project-template/main/images/create-cmake-project.png)
 

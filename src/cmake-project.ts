@@ -18,6 +18,21 @@ class CMakeProject extends AbstractProject {
       });
     }
 
+    if (process.platform === "darwin") {
+      extraItems.push(
+        {
+          label: "Objective-C",
+          value: "objc",
+          versions: ["99", "11", "17", "23"],
+        },
+        {
+          label: "Objective-C++",
+          value: "objcxx",
+          versions: ["11", "14", "17", "20", "23", "26"],
+        },
+      );
+    }
+
     const options = await this.promptStandardProjectOptions(
       this.createLanguageItems(extraItems),
     );
