@@ -12,10 +12,7 @@ function getDefaultPath(): string {
 }
 
 export async function findRoot(): Promise<string | undefined> {
-  if (
-    process.env.VCPKG_ROOT &&
-    (await fse.pathExists(process.env.VCPKG_ROOT))
-  ) {
+  if (process.env.VCPKG_ROOT && (await fse.pathExists(process.env.VCPKG_ROOT))) {
     Logger.log(`Found at VCPKG_ROOT: ${process.env.VCPKG_ROOT}`);
     return process.env.VCPKG_ROOT;
   }
@@ -38,7 +35,7 @@ export async function ensureRoot(): Promise<string | undefined> {
   const install = await window.showInformationMessage(
     l10n.t("vcpkg.notFound"),
     l10n.t("vcpkg.install"),
-    l10n.t("vcpkg.cancel")
+    l10n.t("vcpkg.cancel"),
   );
 
   if (install === l10n.t("vcpkg.install")) {
@@ -66,9 +63,7 @@ export async function ensureRoot(): Promise<string | undefined> {
 
           progress.report({ message: l10n.t("vcpkg.bootstrapping") });
           const bootstrapScript =
-            process.platform === "win32"
-              ? "bootstrap-vcpkg.bat"
-              : "./bootstrap-vcpkg.sh";
+            process.platform === "win32" ? "bootstrap-vcpkg.bat" : "./bootstrap-vcpkg.sh";
           Logger.log("Bootstrapping...");
           await execute(bootstrapScript, defaultPath);
         },
@@ -103,9 +98,7 @@ export async function updateSelf(root: string): Promise<void> {
     Logger.log("vcpkg updated successfully.");
   } catch (err: any) {
     Logger.log(`Failed to update vcpkg: ${err.message}`);
-    window.showWarningMessage(
-      l10n.t("vcpkg.updateSelfFailed", err.message)
-    );
+    window.showWarningMessage(l10n.t("vcpkg.updateSelfFailed", err.message));
   }
 }
 

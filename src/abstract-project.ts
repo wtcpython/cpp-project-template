@@ -78,9 +78,7 @@ export abstract class AbstractProject {
         commands.executeCommand("vscode.openFolder", Uri.file(targetDir), true);
       }
     } catch (error: any) {
-      window.showErrorMessage(
-        error.message || l10n.t("project.createFailed", error),
-      );
+      window.showErrorMessage(error.message || l10n.t("project.createFailed", error));
     }
   }
 
@@ -92,9 +90,7 @@ export abstract class AbstractProject {
   protected abstract getProjectOptions(): Promise<any | undefined>;
   protected abstract getTemplateDir(options: any): string;
 
-  protected createLanguageItems(
-    extraItems: ProjectLanguageItem[] = [],
-  ): ProjectLanguageItem[] {
+  protected createLanguageItems(extraItems: ProjectLanguageItem[] = []): ProjectLanguageItem[] {
     return [
       {
         label: "C++",

@@ -25,9 +25,7 @@ class EasyXProject extends AbstractProject {
   }
 }
 
-export async function createEasyXProject(
-  context: ExtensionContext,
-): Promise<void> {
+export async function createEasyXProject(context: ExtensionContext): Promise<void> {
   const project = new EasyXProject(context);
   await project.create();
 }

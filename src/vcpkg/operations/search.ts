@@ -54,19 +54,21 @@ export async function searchAndSelectPackage(
 
   quickPick.items = items;
 
-  const selected = await new Promise<QuickPickItem & { package: Package } | undefined>((resolve) => {
-    quickPick.onDidAccept(() => {
-      const selection = quickPick.selectedItems[0];
-      quickPick.hide();
-      resolve(selection);
-    });
+  const selected = await new Promise<(QuickPickItem & { package: Package }) | undefined>(
+    (resolve) => {
+      quickPick.onDidAccept(() => {
+        const selection = quickPick.selectedItems[0];
+        quickPick.hide();
+        resolve(selection);
+      });
 
-    quickPick.onDidHide(() => {
-      resolve(undefined);
-    });
+      quickPick.onDidHide(() => {
+        resolve(undefined);
+      });
 
-    quickPick.show();
-  });
+      quickPick.show();
+    },
+  );
 
   return selected?.package;
 }

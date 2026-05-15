@@ -47,9 +47,7 @@ class PackageManager {
     return searchPackage(wrapper, options);
   }
 
-  async searchAndSelect(
-    options: SearchPackageOptions,
-  ): Promise<Package | undefined> {
+  async searchAndSelect(options: SearchPackageOptions): Promise<Package | undefined> {
     const wrapper = await this.ensureWrapper();
     return searchAndSelectPackage(wrapper, options);
   }
@@ -63,16 +61,12 @@ class PackageManager {
 const packageManager = new PackageManager();
 
 export const add = (options: AddPackageOptions) => packageManager.add(options);
-export const install = (options: InstallPackageOptions) =>
-  packageManager.install(options);
-export const upgrade = (options: UpgradePackageOptions) =>
-  packageManager.upgrade(options);
-export const search = (options: SearchPackageOptions) =>
-  packageManager.search(options);
+export const install = (options: InstallPackageOptions) => packageManager.install(options);
+export const upgrade = (options: UpgradePackageOptions) => packageManager.upgrade(options);
+export const search = (options: SearchPackageOptions) => packageManager.search(options);
 export const searchAndSelect = (options: SearchPackageOptions) =>
   packageManager.searchAndSelect(options);
-export const integrate = (options: IntegratePackageOptions) =>
-  packageManager.integrate(options);
+export const integrate = (options: IntegratePackageOptions) => packageManager.integrate(options);
 
 export { Wrapper };
 export type { Package };

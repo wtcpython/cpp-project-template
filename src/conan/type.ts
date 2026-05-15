@@ -10,14 +10,14 @@ export interface ProjectConfig {
 export const configs: Partial<Record<TemplateType, ProjectConfig>> = {
   [TemplateType.SDL]: {
     requires: ["sdl/2.28.5"],
-    templateName: "sdl-project",
+    templateName: "sdl",
   },
   [TemplateType.SDL3]: {
     requires: ["sdl/3.2.0"],
-    templateName: "sdl3-project",
+    templateName: "sdl3",
   },
   [TemplateType.OpenGL]: {
     requires: ["glfw/3.4", "glad/0.1.36", "glm/0.9.9.8"],
-    templateName: "opengl-project",
+    templateName: "opengl",
   },
 };

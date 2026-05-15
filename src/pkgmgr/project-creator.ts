@@ -1,12 +1,4 @@
-import {
-  window,
-  commands,
-  Uri,
-  ExtensionContext,
-  ProgressLocation,
-  Progress,
-  l10n,
-} from "vscode";
+import { window, commands, Uri, ExtensionContext, ProgressLocation, Progress, l10n } from "vscode";
 import * as fse from "fs-extra";
 import * as path from "path";
 import * as Mustache from "mustache";
@@ -28,16 +20,16 @@ export async function createManagedProject(
   // 1. Select Package Manager
   const managers = PackageManagerFactory.getManagers();
   const managerChoice = await window.showQuickPick(
-    managers.map(m => m.name),
+    managers.map((m) => m.name),
     {
       placeHolder: l10n.t("pkgmgr.select"),
-      ignoreFocusOut: true
-    }
+      ignoreFocusOut: true,
+    },
   );
 
   if (!managerChoice) {
-     Logger.log("Package manager selection cancelled.");
-     return;
+    Logger.log("Package manager selection cancelled.");
+    return;
   }
 
   const packageManager = PackageManagerFactory.getManager(managerChoice)!;
@@ -45,13 +37,13 @@ export async function createManagedProject(
   // 2. Get Config
   let config: any;
   let dependencies: string[] = [];
-  
+
   if (packageManager.name === "vcpkg") {
-      config = vcpkgConfigs[type];
-      dependencies = config?.ports || [];
+    config = vcpkgConfigs[type];
+    dependencies = config?.ports || [];
   } else if (packageManager.name === "conan") {
-      config = conanConfigs[type];
-      dependencies = config?.requires || [];
+    config = conanConfigs[type];
+    dependencies = config?.requires || [];
   }
 
   if (!config) {
@@ -82,20 +74,14 @@ export async function createManagedProject(
       async (progress) => {
         // 4. Init Package Manager
         await packageManager.init({
-            targetDir,
-            projectName,
-            dependencies,
-            progress
+          targetDir,
+          projectName,
+          dependencies,
+          progress,
         });
 
         // 5. Generate Project Files
-        await generateProjectFiles(
-          context,
-          targetDir,
-          config.templateName,
-          projectName,
-          progress,
-        );
+        await generateProjectFiles(context, targetDir, config.templateName, projectName, progress);
       },
     );
 
@@ -154,11 +140,7 @@ async function generateProjectFiles(
 ) {
   Logger.log(`Generating project files from template: ${templateName}`);
   progress.report({ message: l10n.t("project.genFiles") });
-  const templateDir = path.join(
-    context.extensionPath,
-    "templates",
-    templateName,
-  );
+  const templateDir = path.join(context.extensionPath, "templates", templateName);
   await fse.copy(templateDir, targetDir, { overwrite: true });
 
   const cmakeVars = { projectName };

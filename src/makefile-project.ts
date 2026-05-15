@@ -15,8 +15,8 @@ class MakefileProject extends AbstractProject {
     return path.join(
       this.context.extensionPath,
       "templates",
-      "makefile-basic",
-      `${options.langType}-${options.targetType}-project`,
+      "makefile",
+      `${options.langType}-${options.targetType}`,
     );
   }
 
@@ -25,9 +25,7 @@ class MakefileProject extends AbstractProject {
   }
 }
 
-export async function createMakefileProject(
-  context: ExtensionContext,
-): Promise<void> {
+export async function createMakefileProject(context: ExtensionContext): Promise<void> {
   const project = new MakefileProject(context);
   await project.create();
 }

@@ -5,10 +5,7 @@ import * as Logger from "../../logger";
 import { Wrapper } from "../core/wrapper";
 import { AddPackageOptions } from "../type";
 
-export async function addPackage(
-  wrapper: Wrapper,
-  options: AddPackageOptions,
-): Promise<void> {
+export async function addPackage(wrapper: Wrapper, options: AddPackageOptions): Promise<void> {
   const { name, projectDir } = options;
   Logger.show();
 
@@ -36,10 +33,7 @@ export async function addPackage(
   }
 }
 
-async function getUsageInfo(
-  projectDir: string,
-  pkg: string,
-): Promise<string | undefined> {
+async function getUsageInfo(projectDir: string, pkg: string): Promise<string | undefined> {
   const installedDir = path.join(projectDir, "vcpkg_installed");
   if (!(await fse.pathExists(installedDir))) {
     return undefined;
@@ -84,7 +78,9 @@ function parseUsage(output: string, pkg: string) {
 
 async function updateCMakeLists(dir: string, output: string, pkg: string) {
   const cmakePath = path.join(dir, "CMakeLists.txt");
-  if (!(await fse.pathExists(cmakePath))) { return; }
+  if (!(await fse.pathExists(cmakePath))) {
+    return;
+  }
 
   const info = parseUsage(output, pkg);
   if (!info) {
@@ -94,34 +90,42 @@ async function updateCMakeLists(dir: string, output: string, pkg: string) {
 
   const select = await window.showQuickPick(
     [
-        { label: l10n.t("vcpkg.yes"), description: l10n.t("vcpkg.yesDetail", info.findPkg, info.libs.join(", ")) },
-        { label: l10n.t("vcpkg.no") }
+      {
+        label: l10n.t("vcpkg.yes"),
+        description: l10n.t("vcpkg.yesDetail", info.findPkg, info.libs.join(", ")),
+      },
+      { label: l10n.t("vcpkg.no") },
     ],
-    { placeHolder: l10n.t("vcpkg.updateCmake", pkg) }
+    { placeHolder: l10n.t("vcpkg.updateCmake", pkg) },
   );
-  if (select?.label !== l10n.t("vcpkg.yes")) { return; }
+  if (select?.label !== l10n.t("vcpkg.yes")) {
+    return;
+  }
 
   let content = await fse.readFile(cmakePath, "utf-8");
 
   // 1. Insert find_package
   if (!content.includes(info.findPkg)) {
     const lastFindIdx = content.lastIndexOf("find_package");
-    const insertIdx = lastFindIdx !== -1 
-      ? content.indexOf("\n", lastFindIdx) + 1 
-      : (content.indexOf("project(") !== -1 ? content.indexOf("\n", content.indexOf("project(")) + 1 : 0);
-    
+    const insertIdx =
+      lastFindIdx !== -1
+        ? content.indexOf("\n", lastFindIdx) + 1
+        : content.indexOf("project(") !== -1
+          ? content.indexOf("\n", content.indexOf("project(")) + 1
+          : 0;
+
     content = content.slice(0, insertIdx) + `\n${info.findPkg}\n` + content.slice(insertIdx);
   }
 
   // 2. Link libraries (Merge or Append)
   const target = content.match(/add_(?:executable|library)\s*\(\s*([^\s)]+)/i)?.[1];
-  
+
   if (target && info.libs.length > 0) {
-    const newLibs = info.libs.filter(lib => !content.includes(lib));
+    const newLibs = info.libs.filter((lib) => !content.includes(lib));
     if (newLibs.length > 0) {
       const escapedTarget = target.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      const tllRegex = new RegExp(`target_link_libraries\\s*\\(\\s*${escapedTarget}\\s+`, 'g');
-      
+      const tllRegex = new RegExp(`target_link_libraries\\s*\\(\\s*${escapedTarget}\\s+`, "g");
+
       let match;
       let lastMatchIndex = -1;
       while ((match = tllRegex.exec(content)) !== null) {
@@ -133,11 +137,11 @@ async function updateCMakeLists(dir: string, output: string, pkg: string) {
         const closeParenIndex = findClosingParen(content, lastMatchIndex);
         if (closeParenIndex !== -1) {
           const commandStr = content.substring(lastMatchIndex, closeParenIndex + 1);
-          if (commandStr.includes('\n')) {
+          if (commandStr.includes("\n")) {
             // Multi-line: Insert before closing paren on a new line
-             const beforeClose = content.substring(0, closeParenIndex);
-             const afterClose = content.substring(closeParenIndex);
-             content = beforeClose.trimEnd() + `\n    ${newLibs.join(" ")}\n` + afterClose;
+            const beforeClose = content.substring(0, closeParenIndex);
+            const afterClose = content.substring(closeParenIndex);
+            content = beforeClose.trimEnd() + `\n    ${newLibs.join(" ")}\n` + afterClose;
           } else {
             // Single-line: Insert before closing paren
             const beforeClose = content.substring(0, closeParenIndex);
@@ -161,10 +165,14 @@ async function updateCMakeLists(dir: string, output: string, pkg: string) {
 function findClosingParen(text: string, startIndex: number): number {
   let openCount = 0;
   for (let i = startIndex; i < text.length; i++) {
-    if (text[i] === '(') { openCount++; }
-    if (text[i] === ')') {
+    if (text[i] === "(") {
+      openCount++;
+    }
+    if (text[i] === ")") {
       openCount--;
-      if (openCount === 0) { return i; }
+      if (openCount === 0) {
+        return i;
+      }
     }
   }
   return -1;

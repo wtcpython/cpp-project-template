@@ -33,9 +33,7 @@ class CMakeProject extends AbstractProject {
       );
     }
 
-    const options = await this.promptStandardProjectOptions(
-      this.createLanguageItems(extraItems),
-    );
+    const options = await this.promptStandardProjectOptions(this.createLanguageItems(extraItems));
     if (!options) {
       return undefined;
     }
@@ -66,24 +64,15 @@ class CMakeProject extends AbstractProject {
   }
 
   protected getTemplateDir(options: any): string {
-    const base = path.join(
-      this.context.extensionPath,
-      "templates",
-      "cmake-basic",
-    );
+    const base = path.join(this.context.extensionPath, "templates", "cmake");
     if (options.langType === "cpp" && options.enableModules) {
-      return path.join(
-        base,
-        `${options.langType}-module-${options.targetType}-project`,
-      );
+      return path.join(base, `${options.langType}-module-${options.targetType}`);
     }
-    return path.join(base, `${options.langType}-${options.targetType}-project`);
+    return path.join(base, `${options.langType}-${options.targetType}`);
   }
 }
 
-export async function createCMakeProject(
-  context: ExtensionContext,
-): Promise<void> {
+export async function createCMakeProject(context: ExtensionContext): Promise<void> {
   const project = new CMakeProject(context);
   await project.create();
 }

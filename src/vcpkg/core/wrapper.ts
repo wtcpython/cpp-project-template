@@ -34,16 +34,19 @@ export class Wrapper {
     try {
       const result = await this.exec(["search", "--x-full-desc", keyword], cwd);
 
-      const lines = result.split(/\r?\n/).filter(line => line.trim() && !line.startsWith('['));
+      const lines = result.split(/\r?\n/).filter((line) => line.trim() && !line.startsWith("["));
 
       const packages: Package[] = [];
       for (const line of lines) {
-        const parts = line.trim().split(/\s{2,}/).filter(p => p.trim());
+        const parts = line
+          .trim()
+          .split(/\s{2,}/)
+          .filter((p) => p.trim());
         if (parts.length >= 3) {
           packages.push({
             name: parts[0].trim(),
             version: parts[1].trim(),
-            description: parts[2].trim()
+            description: parts[2].trim(),
           });
         }
       }

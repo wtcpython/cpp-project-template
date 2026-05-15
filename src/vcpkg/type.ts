@@ -9,15 +9,15 @@ export interface ProjectConfig {
 export const configs: Partial<Record<TemplateType, ProjectConfig>> = {
   [TemplateType.SDL]: {
     ports: ["sdl2"],
-    templateName: "sdl-project",
+    templateName: "sdl",
   },
   [TemplateType.SDL3]: {
     ports: ["sdl3"],
-    templateName: "sdl3-project",
+    templateName: "sdl3",
   },
   [TemplateType.OpenGL]: {
     ports: ["glfw3", "glad", "glm"],
-    templateName: "opengl-project",
+    templateName: "opengl",
   },
 };
 

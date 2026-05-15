@@ -9,8 +9,9 @@ export class Utility {
       return workspace.workspaceFolders[0];
     }
     if (window.activeTextEditor) {
-      const activeWorkspaceFolder: WorkspaceFolder | undefined =
-        workspace.getWorkspaceFolder(window.activeTextEditor.document.uri);
+      const activeWorkspaceFolder: WorkspaceFolder | undefined = workspace.getWorkspaceFolder(
+        window.activeTextEditor.document.uri,
+      );
       return activeWorkspaceFolder;
     }
     return undefined;

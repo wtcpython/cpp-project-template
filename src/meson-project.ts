@@ -16,29 +16,20 @@ class MesonProject extends AbstractProject {
       this.context.extensionPath,
       "templates",
       "meson",
-      `${options.langType}-${options.targetType}-project`,
+      `${options.langType}-${options.targetType}`,
     );
   }
 
   protected async renderTemplates(targetDir: string, vars: any): Promise<void> {
     await this.renderExistingTemplates(
       targetDir,
-      [
-        "meson.build",
-        "src/meson.build",
-        "src/main.cpp",
-        "src/main.c",
-        "src/lib.cpp",
-        "src/lib.c",
-      ],
+      ["meson.build", "src/meson.build", "src/main.cpp", "src/main.c", "src/lib.cpp", "src/lib.c"],
       vars,
     );
   }
 }
 
-export async function createMesonProject(
-  context: ExtensionContext,
-): Promise<void> {
+export async function createMesonProject(context: ExtensionContext): Promise<void> {
   const project = new MesonProject(context);
   await project.create();
 }

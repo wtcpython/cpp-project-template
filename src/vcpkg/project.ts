@@ -1,12 +1,4 @@
-import {
-  window,
-  commands,
-  Uri,
-  ExtensionContext,
-  ProgressLocation,
-  Progress,
-  l10n,
-} from "vscode";
+import { window, commands, Uri, ExtensionContext, ProgressLocation, Progress, l10n } from "vscode";
 import * as fse from "fs-extra";
 import * as path from "path";
 import * as Mustache from "mustache";
@@ -16,10 +8,7 @@ import * as Logger from "../logger";
 import { configs, ProjectConfig } from "./type";
 import { Wrapper, ensureRoot } from "./core/wrapper";
 
-export async function createProject(
-  context: ExtensionContext,
-  type: TemplateType,
-): Promise<void> {
+export async function createProject(context: ExtensionContext, type: TemplateType): Promise<void> {
   Logger.show();
   Logger.log(`Starting creation of ${type} project...`);
 
@@ -56,20 +45,8 @@ export async function createProject(
         cancellable: false,
       },
       async (progress) => {
-        await initManifest(
-          wrapper,
-          targetDir,
-          projectName,
-          config.ports,
-          progress,
-        );
-        await generateProjectFiles(
-          context,
-          targetDir,
-          config.templateName,
-          projectName,
-          progress,
-        );
+        await initManifest(wrapper, targetDir, projectName, config.ports, progress);
+        await generateProjectFiles(context, targetDir, config.templateName, projectName, progress);
       },
     );
 
@@ -146,11 +123,7 @@ async function generateProjectFiles(
 ) {
   Logger.log(`Generating project files from template: ${templateName}`);
   progress.report({ message: l10n.t("vcpkg.gen") });
-  const templateDir = path.join(
-    context.extensionPath,
-    "templates",
-    templateName,
-  );
+  const templateDir = path.join(context.extensionPath, "templates", templateName);
   await fse.copy(templateDir, targetDir, { overwrite: true });
 
   const cmakeVars = { projectName };

@@ -30,9 +30,8 @@ export class ProjectController implements Disposable {
 
   public constructor(public readonly context: ExtensionContext) {
     this.disposable = Disposable.from(
-      commands.registerCommand(
-        "_cpp.project.create.from.fileexplorer.welcome",
-        () => this.createProject(),
+      commands.registerCommand("_cpp.project.create.from.fileexplorer.welcome", () =>
+        this.createProject(),
       ),
       commands.registerCommand("_cpp.project.createClass", (uri?: Uri) =>
         newCppFileWithSpecificType(CppType.CLASS, uri),
@@ -55,62 +54,42 @@ export class ProjectController implements Disposable {
       commands.registerCommand("_cpp.project.createCSource", (uri?: Uri) =>
         newCppFileWithSpecificType(CppType.CSOURCE, uri),
       ),
-      commands.registerCommand(
-        "_cpp.project.integrateVcpkgToolchain",
-        async (uri?: Uri) => {
-          if (uri) {
-            await integrate({ uri });
-          }
-        },
-      ),
-      commands.registerCommand(
-        "_cpp.project.upgradeDependencies",
-        async (uri?: Uri) => {
-          if (uri) {
-            await upgrade({ projectDir: path.dirname(uri.fsPath) });
-          }
-        },
-      ),
-      commands.registerCommand(
-        "_cpp.project.refreshDependencies",
-        async (uri?: Uri) => {
-          if (uri) {
-            await install({ projectDir: path.dirname(uri.fsPath) });
-          }
-        },
-      ),
-      commands.registerCommand(
-        "_cpp.project.addDependency",
-        async (uri?: Uri) => {
-          if (uri) {
-            const projectDir = path.dirname(uri.fsPath);
+      commands.registerCommand("_cpp.project.integrateVcpkgToolchain", async (uri?: Uri) => {
+        if (uri) {
+          await integrate({ uri });
+        }
+      }),
+      commands.registerCommand("_cpp.project.upgradeDependencies", async (uri?: Uri) => {
+        if (uri) {
+          await upgrade({ projectDir: path.dirname(uri.fsPath) });
+        }
+      }),
+      commands.registerCommand("_cpp.project.refreshDependencies", async (uri?: Uri) => {
+        if (uri) {
+          await install({ projectDir: path.dirname(uri.fsPath) });
+        }
+      }),
+      commands.registerCommand("_cpp.project.addDependency", async (uri?: Uri) => {
+        if (uri) {
+          const projectDir = path.dirname(uri.fsPath);
 
-            try {
-              const pkg = await searchAndSelect({ keyword: "", projectDir });
-              if (!pkg) {
-                return;
-              }
-
-              await add({ name: pkg.name, projectDir });
-            } catch (err: any) {
-              console.error("Failed to add dependency:", err);
-              window.showErrorMessage(
-                `${l10n.t("controller.addDepFailed")} ${err.message}`,
-              );
+          try {
+            const pkg = await searchAndSelect({ keyword: "", projectDir });
+            if (!pkg) {
+              return;
             }
+
+            await add({ name: pkg.name, projectDir });
+          } catch (err: any) {
+            console.error("Failed to add dependency:", err);
+            window.showErrorMessage(`${l10n.t("controller.addDepFailed")} ${err.message}`);
           }
-        },
-      ),
-      commands.registerCommand(
-        "cpp.project.installExtension",
-        (extensionId: string) => {
-          commands.executeCommand(
-            "workbench.extensions.installExtension",
-            extensionId,
-          );
-          commands.executeCommand("extension.open", extensionId);
-        },
-      ),
+        }
+      }),
+      commands.registerCommand("cpp.project.installExtension", (extensionId: string) => {
+        commands.executeCommand("workbench.extensions.installExtension", extensionId);
+        commands.executeCommand("extension.open", extensionId);
+      }),
     );
   }
 
@@ -193,23 +172,16 @@ export class ProjectController implements Disposable {
         await commands.executeCommand(choice.metadata.createCommandId);
       }
     } else {
-      window.showInformationMessage(
-        l10n.t("controller.selected", choice.label),
-      );
+      window.showInformationMessage(l10n.t("controller.selected", choice.label));
     }
   }
 
-  private async ensureExtension(
-    typeName: string,
-    metaData: ProjectTypeMetadata,
-  ): Promise<boolean> {
+  private async ensureExtension(typeName: string, metaData: ProjectTypeMetadata): Promise<boolean> {
     if (!metaData.extensionId) {
       return true;
     }
 
-    const extension: Extension<any> | undefined = extensions.getExtension(
-      metaData.extensionId,
-    );
+    const extension: Extension<any> | undefined = extensions.getExtension(metaData.extensionId);
     if (extension === undefined) {
       await this.promptInstallExtension(typeName, metaData);
       return false;
@@ -238,10 +210,7 @@ export class ProjectController implements Disposable {
       l10n.t("controller.install"),
     );
     if (choice === l10n.t("controller.install")) {
-      commands.executeCommand(
-        "cpp.project.installExtension",
-        metaData.extensionId,
-      );
+      commands.executeCommand("cpp.project.installExtension", metaData.extensionId);
     }
   }
 
@@ -254,10 +223,7 @@ export class ProjectController implements Disposable {
       l10n.t("controller.update"),
     );
     if (choice === l10n.t("controller.update")) {
-      commands.executeCommand(
-        "cpp.project.installExtension",
-        metaData.extensionId,
-      );
+      commands.executeCommand("cpp.project.installExtension", metaData.extensionId);
     }
   }
 }

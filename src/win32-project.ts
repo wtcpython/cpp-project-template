@@ -22,7 +22,7 @@ class Win32Project extends AbstractProject {
   }
 
   protected getTemplateDir(options: any): string {
-    return path.join(this.context.extensionPath, "templates", "win32-project");
+    return path.join(this.context.extensionPath, "templates", "win32");
   }
 
   protected async renderTemplates(targetDir: string, vars: any): Promise<void> {
@@ -38,9 +38,7 @@ class Win32Project extends AbstractProject {
   }
 }
 
-export async function createWin32Project(
-  context: ExtensionContext,
-): Promise<void> {
+export async function createWin32Project(context: ExtensionContext): Promise<void> {
   const project = new Win32Project(context);
   await project.create();
 }
