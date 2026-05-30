@@ -1,6 +1,3 @@
-#ifndef {{headerGuard}}
-#define {{headerGuard}}
+#pragma once
 
 // TODO: Add header content
-
-#endif // {{headerGuard}}

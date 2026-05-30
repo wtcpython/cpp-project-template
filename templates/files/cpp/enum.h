@@ -1,8 +1,5 @@
-#ifndef {{headerGuard}}
-#define {{headerGuard}}
+#pragma once
 
 enum class {{name}} {
     Default
 };
-
-#endif // {{headerGuard}}

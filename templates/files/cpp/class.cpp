@@ -1,6 +1,6 @@
 #include "{{name}}.h"
 
-{{name}}::{{name}}() {
+{{name}}::{{name}}(){{#baseClass}} : {{baseClass}}(){{/baseClass}} {
 
 }
 

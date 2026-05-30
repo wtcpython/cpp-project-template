@@ -57,10 +57,26 @@ async function newCppFile(folderPath: string, cppType: CppType) {
     return;
   }
 
-  await newCppFileWithContents(folderPath, name, cppType);
+  let baseClass: string | undefined;
+  if (cppType === CppType.CLASS) {
+    baseClass = await window.showInputBox({
+      placeHolder: l10n.t("new.inputBaseClass"),
+      ignoreFocusOut: true,
+    });
+    if (baseClass === undefined) {
+      return;
+    }
+  }
+
+  await newCppFileWithContents(folderPath, name, cppType, baseClass);
 }
 
-async function newCppFileWithContents(folderPath: string, name: string, type: CppType) {
+async function newCppFileWithContents(
+  folderPath: string,
+  name: string,
+  type: CppType,
+  baseClass?: string,
+) {
   // Retrieve extension path dynamically
   const extension = extensions.getExtension("wtc.cpp-project-template");
   if (!extension) {
@@ -71,7 +87,7 @@ async function newCppFileWithContents(folderPath: string, name: string, type: Cp
 
   const view = {
     name: name,
-    headerGuard: `${name.toUpperCase()}_H`,
+    baseClass: baseClass ?? "",
   };
 
   const filesToGenerate = getFilesToGenerate(type, name);

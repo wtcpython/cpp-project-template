@@ -54,6 +54,9 @@ export class ProjectController implements Disposable {
       commands.registerCommand("_cpp.project.createCSource", (uri?: Uri) =>
         newCppFileWithSpecificType(CppType.CSOURCE, uri),
       ),
+      commands.registerCommand("_cpp.project.createQt", () =>
+        commands.executeCommand("qt-core.createNewItem"),
+      ),
       commands.registerCommand("_cpp.project.integrateVcpkgToolchain", async (uri?: Uri) => {
         if (uri) {
           await integrate({ uri });

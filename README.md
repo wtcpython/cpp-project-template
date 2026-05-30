@@ -31,8 +31,8 @@ The version you selected will be written in `CMakeLists.txt` or `meson.build`.
 
 When you open a folder, you can create C/C++ specific files, like class, enum, interface, it will automatically generate some code in the file, like:
 
-- If you select a class, it will create both `.h` and `.cpp` files, and the `.cpp` file will include `.h` file.
-- If you select a header file, it will contain `#ifdef`, `#define` and `#endif`.
+- If you select a class, it will create both `.h` and `.cpp` files, the `.cpp` file will include `.h` file, and you can optionally specify a base class to inherit from.
+- If you select a header file, it will contain `#pragma once`.
 
 ![create cpp file](https://raw.githubusercontent.com/wtcpython/cpp-project-template/main/images/create-cpp-file.png)
 

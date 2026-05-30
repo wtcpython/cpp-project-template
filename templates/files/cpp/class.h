@@ -1,7 +1,10 @@
-#ifndef {{headerGuard}}
-#define {{headerGuard}}
+#pragma once
 
-class {{name}} {
+{{#baseClass}}
+#include "{{baseClass}}.h"
+{{/baseClass}}
+
+class {{name}}{{#baseClass}} : public {{baseClass}}{{/baseClass}} {
 public:
     {{name}}();
     ~{{name}}();
@@ -9,5 +12,3 @@ public:
 private:
 
 };
-
-#endif // {{headerGuard}}

@@ -88,6 +88,10 @@
         "title": "%contributes.commands.cpp.project.createCSource%"
       },
       {
+        "command": "_cpp.project.createQt",
+        "title": "%contributes.commands.cpp.project.createQt%"
+      },
+      {
         "command": "_cpp.project.integrateVcpkgToolchain",
         "title": "%contributes.commands.cpp.project.integrateVcpkgToolchain%"
       },
@@ -114,6 +118,11 @@
         {
           "submenu": "cppProject.newCFile",
           "group": "1_cppactions@20",
+          "when": "explorerResourceIsFolder"
+        },
+        {
+          "submenu": "cppProject.newQtFile",
+          "group": "1_cppactions@30",
           "when": "explorerResourceIsFolder"
         },
         {
@@ -168,6 +177,12 @@
           "command": "_cpp.project.createCSource",
           "group": "new@20"
         }
+      ],
+      "cppProject.newQtFile": [
+        {
+          "command": "_cpp.project.createQt",
+          "group": "new@10"
+        }
       ]
     },
     "submenus": [
@@ -178,6 +193,10 @@
       {
         "id": "cppProject.newCFile",
         "label": "%contributes.submenus.cppProject.newCFile%"
+      },
+      {
+        "id": "cppProject.newQtFile",
+        "label": "%contributes.submenus.cppProject.newQtFile%"
       }
     ],
     "viewsWelcome": [

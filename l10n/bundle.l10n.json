@@ -36,6 +36,7 @@
   "cmake.enableModulesQuestion": "Enable C++ modules support?",
 
   "new.inputName": "Input the {0} name",
+  "new.inputBaseClass": "Input the base class (leave empty for none)",
   "new.exists": "{0} already exists.",
   "new.extNotFound": "Extension not found.",
   "new.createError": "Error creating file {0}: {1}",

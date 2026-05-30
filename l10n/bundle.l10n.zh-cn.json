@@ -36,6 +36,7 @@
   "cmake.enableModulesQuestion": "是否启用 C++ 模块支持？",
 
   "new.inputName": "输入 {0} 名称",
+  "new.inputBaseClass": "输入继承的基类（留空则无）",
   "new.exists": "{0} 已存在。",
   "new.extNotFound": "未找到扩展。",
   "new.createError": "创建文件 {0} 时出错：{1}",
