@@ -2,6 +2,13 @@
 
 All notable changes to the "cpp-project-template" extension will be documented in this file.
 
+## 0.3.0 - 2026-05-30
+
+- refactor: replace include guards with #pragma once
+- feat: add optional base class inheritance for C++ class
+- feat: add Qt file context menu entry
+- ci: add GitHub Actions for lint and release
+
 ## 0.2.0 - 2026-03-13
 
 - Add makefile project template
